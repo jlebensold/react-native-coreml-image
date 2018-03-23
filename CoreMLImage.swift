@@ -127,14 +127,14 @@ public class CoreMLImage: UIView, AVCaptureVideoDataOutputSampleBufferDelegate {
   
   @objc(setModelFile:) public func setModelFile(modelFile: String) {
     print("Setting model file to: " + modelFile)
-    let path = Bundle.main.url(forResource: modelFile, withExtension: "mlmodelc")
+    let path = URL(fileURLWithPath: modelFile)
     
     do {
-      let modelUrl = try MLModel.compileModel(at: path!)
+      let modelUrl = try MLModel.compileModel(at: path)
       let model = try MLModel.init(contentsOf: modelUrl)
       self.model = try VNCoreMLModel(for: model)
       
-    } catch {
+    } catch let error{
       print("Error")
     }
     
